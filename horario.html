@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horario de Grupo - Semestre 2026-2026</title>
+    <style>
+        :root {
+            --green-dark: #1b4d3e;
+            --green-medium: #2c7a65;
+            --green-light: #e8f5e9;
+            --green-accent: #a3d9a5;
+            --green-hover: #c8e6c9;
+            --text-dark: #222222;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f5;
+            color: var(--text-dark);
+            margin: 20px;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 6px solid var(--green-dark);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--green-dark);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Información General */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            background-color: var(--green-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid var(--green-accent);
+        }
+
+        .info-item {
+            font-size: 0.95rem;
+        }
+
+        .info-item strong {
+            color: var(--green-dark);
+        }
+
+        /* Estilos de Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 0.88rem;
+            background-color: var(--white);
+            overflow: hidden;
+            border-radius: 6px;
+        }
+
+        th, td {
+            border: 1px solid #dcdcdc;
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: var(--green-dark);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .table-title {
+            background-color: var(--green-medium);
+            color: var(--white);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .receso {
+            background-color: var(--green-accent);
+            font-weight: bold;
+            color: var(--green-dark);
+            letter-spacing: 2px;
+        }
+
+        tr:nth-child(even):not(.receso) {
+            background-color: #f9fbf9;
+        }
+
+        tr:hover:not(.receso) {
+            background-color: var(--green-hover);
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        /* Sección de Firmas / Pie de página */
+        .footer-info {
+            margin-top: 30px;
+            border-top: 2px dashed var(--green-accent);
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .institution-details {
+            font-weight: bold;
+            color: var(--green-dark);
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .signatures {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .signature-box {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .signature-line {
+            border-bottom: 1px solid var(--green-dark);
+            margin-bottom: 8px;
+            height: 40px;
+        }
+
+        .signature-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--green-dark);
+        }
+
+        .signature-name {
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">← Volver al Inicio (Index)</a>
+    </nav>
+    
+
+<div class="container">
+    <h1>Horario de Grupo Correspondiente al Semestre 2026-2026</h1>
+
+    <!-- Datos de cabecera -->
+    <div class="info-grid">
+        <div class="info-item"><strong>GRUPO:</strong> 505</div>
+        <div class="info-item"><strong>SEMESTRE:</strong> QUINTO</div>
+        <div class="info-item"><strong>ESPECIALIDAD:</strong> PROGRAMACIÓN</div>
+        <div class="info-item"><strong>TURNO:</strong> MATUTINO</div>
+        <div class="info-item"><strong>AULA:</strong> F6</div>
+    </div>
+
+    <!-- TABLA 1: HORARIO DE CLASES -->
+    <table>
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>HORA</th>
+                <th>LUNES</th>
+                <th>AULA</th>
+                <th>MARTES</th>
+                <th>AULA</th>
+                <th>MIÉRCOLES</th>
+                <th>AULA</th>
+                <th>JUEVES</th>
+                <th>AULA</th>
+                <th>VIERNES</th>
+                <th>AULA</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>07:00 - 07:50</td>
+                <td>Energía Proc</td>
+                <td>LEM</td>
+                <td>Conc Hist II</td>
+                <td>F6</td>
+                <td>Energía Proc</td>
+                <td>F6</td>
+                <td>Implemen WEB</td>
+                <td>SC2</td>
+                <td>Energía Proc</td>
+                <td>F6</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>07:50 - 08:40</td>
+                <td>Eco Púb Soc</td>
+                <td>F6</td>
+                <td>Implemen WEB</td>
+                <td>SC2</td>
+                <td>Tem Selec II</td>
+                <td>F6</td>
+                <td>Tem Selec II</td>
+                <td>F6</td>
+                <td>Inglés V</td>
+                <td>F6</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>08:40 - 09:30</td>
+                <td>Conc Hist II</td>
+                <td>F6</td>
+                <td>Tem Selec II</td>
+                <td>F6</td>
+                <td>Inglés V</td>
+                <td>F6</td>
+                <td>Energía Proc</td>
+                <td>F6</td>
+                <td>Conc Hist II</td>
+                <td>F6</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>09:30 - 10:20</td>
+                <td>Construc WEB</td>
+                <td>SC2</td>
+                <td>Tem Selec II</td>
+                <td>F6</td>
+                <td>Construc WEB</td>
+                <td>SC2</td>
+                <td>Construc WEB</td>
+                <td>SC2</td>
+                <td>Tem Selec II</td>
+                <td>F6</td>
+            </tr>
+            <tr class="receso">
+                <td colspan="12">R E C E S O</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>10:40 - 11:30</td>
+                <td>Construc WEB</td>
+                <td>SC2</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Construc WEB</td>
+                <td>SC2</td>
+                <td>Inglés V</td>
+                <td>F6</td>
+                <td>Eco Púb Soc</td>
+                <td>F6</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>11:30 - 12:20</td>
+                <td>Inglés V</td>
+                <td>F6</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Implemen WEB</td>
+                <td>SC2</td>
+                <td>Inglés V</td>
+                <td>F6</td>
+                <td>Construc WEB</td>
+                <td>SC2</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>12:20 - 13:10</td>
+                <td>Implemen WEB</td>
+                <td>SC2</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Implemen WEB</td>
+                <td>SC2</td>
+                <td>Eco Púb Soc</td>
+                <td>F6</td>
+                <td>Construc WEB</td>
+                <td>SC2</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- TABLA 2: ASIGNATURAS Y DOCENTES -->
+    <table>
+        <thead>
+            <tr>
+                <th>CLV</th>
+                <th>ASIGNATURA</th>
+                <th>T</th>
+                <th>P</th>
+                <th>TOTAL HORAS</th>
+                <th>DOCENTES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>30821-0005<br><small>237C</small></td>
+                <td class="text-left">Temas selectos de matemáticas II</td>
+                <td>5</td>
+                <td>0</td>
+                <td>5</td>
+                <td class="text-left">Ing. Alma Delia Godínez Ramos</td>
+            </tr>
+            <tr>
+                <td>30822-0002<br><small>237C</small></td>
+                <td class="text-left">Conciencia histórica II. México durante el expansionismo capitalista</td>
+                <td>3</td>
+                <td>0</td>
+                <td>3</td>
+                <td class="text-left">Lic. Irma Rodríguez Aranda</td>
+            </tr>
+            <tr>
+                <td>30870-0005<br><small>237C</small></td>
+                <td class="text-left">La energía en los procesos de la vida diaria</td>
+                <td>4</td>
+                <td>0</td>
+                <td>4</td>
+                <td class="text-left">Mtro. Vicente Carmona León</td>
+            </tr>
+            <tr>
+                <td>30822-0006<br><small>237C</small></td>
+                <td class="text-left">Inglés V</td>
+                <td>5</td>
+                <td>0</td>
+                <td>5</td>
+                <td class="text-left">Lic. Kenia Contreras Calderón</td>
+            </tr>
+            <tr>
+                <td>30014-0001<br><small>237C</small></td>
+                <td class="text-left">Economía Pública Social</td>
+                <td>3</td>
+                <td>0</td>
+                <td>3</td>
+                <td class="text-left">Ing. Verónica Venegas Rosas</td>
+            </tr>
+            <tr>
+                <td>3081300004<br><small>2264451</small></td>
+                <td class="text-left">Construye aplicaciones WEB</td>
+                <td>0</td>
+                <td>7</td>
+                <td>7</td>
+                <td class="text-left">Ing. René Domínguez Escalona</td>
+            </tr>
+            <tr>
+                <td>3081300004<br><small>2264452</small></td>
+                <td class="text-left">Implementa aplicaciones WEB</td>
+                <td>0</td>
+                <td>5</td>
+                <td>5</td>
+                <td class="text-left">Ing. René Domínguez Escalona</td>
+            </tr>
+            <tr>
+                <td>-</td>
+                <td class="text-left">Orientación Educativa</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td class="text-left">Lic. Perla Yazmín Venegas Rosas</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Pie de página e Institución -->
+    <div class="footer-info">
+        <div class="institution-details">
+            SECRETARÍA DE EDUCACIÓN<br>
+            GOBIERNO DEL ESTADO DE MÉXICO<br>
+            COLEGIO DE ESTUDIOS CIENTÍFICOS Y TECNOLÓGICOS DEL ESTADO DE MÉXICO<br>
+            PLANTEL TECÁMAC<br>
+            <small>15ETC0006C</small>
+        </div>
+
+        <div class="signatures">
+            <div class="signature-box">
+                <div class="signature-title">ELABORÓ</div>
+                <div class="signature-line"></div>
+                <div class="signature-name">M. en D. A. HÉCTOR R. ESMERALDA BANDA<br><small>DIRECTOR DEL PLANTEL</small></div>
+            </div>
+            <div class="signature-box">
+                <div class="signature-title">Vo.Bo.</div>
+                <div class="signature-line"></div>
+                <div class="signature-name">M. en G. E. JAVIER BAUTISTA CAPULÍN<br><small>SUBDIRECTOR DEL PLANTEL</small></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
