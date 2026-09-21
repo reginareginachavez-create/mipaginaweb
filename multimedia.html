@@ -33,9 +33,37 @@
             <audio controls autoplay loop>
                 <source src="archivos/WhatsApp Ptt 2026-09-18 at 12.11.12 PM.ogg" type="audio/mpeg">
             </audio>
-
+        
             
-    </center>
+            <h3>Ejemplo imagen con ruta relativa</h3>
+            
+
+            <img src="img/Timi.webp" alt="Tim Bernes lee" width="400" height="300" loading="lazy" border="10px">
+            
+            
+            <h3>Ejemplo imagen con ruta absoluta</h3>
+            <img src="https://cienciaytecnologia.periodismoudec.cl/wp-content/uploads/2025/10/210614211407-01-sir-tim-berners-lee-puts-original-world-wide-web-code-up-for-sale.jpg" alt="Tim Bernes lee" width="400" height="300" loading="lazy" border="10px">
+            
+            <h3>EJEMPLO FIGURE</h3>
+            <figure>
+                <img src="img/estructura.jpeg" alt="semantica HTML">
+                <figcaption>figura 1 estructura semantica html </figcaption>
+            
+            </figure>
+
+            <h3>Ejemplo swf con embed</h3>
+
+            <h3>ejemplo canvas</h3>
+            <canvas id="miCanvas" width="300" height="200"></canvas>
+            <script>
+                const ctx = document.getElementById('miCanvas').getContext('2d');
+                ctx.fillStyle = 'blue';
+                ctx.fillRect(20, 20, 150, 100);
+            </script>
+            <h3>ejemplo svg</h3>
+            <svg width="100" height="100">
+                <circle cx="50" cy="50" r="40" fill="green" />
+            </svg>
     
 </body>
 </html>
