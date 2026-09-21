@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Orb Dash</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: #080711;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .header-nav {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .header-nav a {
+            color: #39ff14;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+        .header-nav a:hover {
+            color: #00ffff;
+            text-shadow: 0 0 8px #00ffff;
+        }
+        h1 {
+            margin: 0 0 5px 0;
+            color: #39ff14;
+            text-shadow: 0 0 12px rgba(57, 255, 20, 0.6);
+            letter-spacing: 2px;
+            font-size: 28px;
+        }
+        p.instructions {
+            margin: 0 0 15px 0;
+            color: #a4adcf;
+            font-size: 14px;
+            text-align: center;
+            max-width: 800px;
+        }
+        .game-container {
+            position: relative;
+        }
+        canvas {
+            border: 3px solid #39ff14;
+            box-shadow: 0 0 25px rgba(57, 255, 20, 0.3);
+            background: #0d0c1d;
+            border-radius: 8px;
+            display: block;
+        }
+        .touch-controls {
+            display: none;
+            margin-top: 15px;
+            gap: 20px;
+        }
+        .btn-touch {
+            background: rgba(57, 255, 20, 0.15);
+            border: 2px solid #39ff14;
+            color: #39ff14;
+            font-size: 24px;
+            padding: 15px 40px;
+            border-radius: 10px;
+            touch-action: manipulation;
+        }
+        .btn-touch:active {
+            background: rgba(57, 255, 20, 0.4);
+        }
+        @media (max-width: 820px) {
+            canvas {
+                width: 95vw;
+                height: auto;
+            }
+            .touch-controls {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <h3><a href="index.html">← REGRESAR</a></h3>
+    </div>
+
+    <h1>CYBER ORB DASH</h1>
+    <p class="instructions">
+        Usa <b>[↑ / W]</b> y <b>[↓ / S]</b> para desplazar la Orbe Cyber. ¡Esquiva los diamantes/picos rojas y atrapa los orbes de energía!
+    </p>
+
+    <div class="game-container">
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+    </div>
+
+    <div class="touch-controls">
+        <button class="btn-touch" id="btnUp">▲</button>
+        <button class="btn-touch" id="btnDown">▼</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // --- Configuración y Estado del Juego ---
+        let score = 0;
+        let highPuntuacion = localStorage.getItem("cyber_orb_high") || 0;
+        let gameSpeed = 5;
+        let gameOver = false;
+        let spawnTimer = 0;
+        let itemTimer = 0;
+        let rotationAngle = 0;
+
+        // --- Jugador: Una Orbe de Energía Circular ---
+        const player = {
+            x: 70,
+            y: 200,
+            radius: 18,
+            speed: 7,
+            shield: false,
+            shieldTimer: 0,
+            trail: []
+        };
+
+        // --- Teclas ---
+        const keys = { ArrowUp: false, ArrowDown: false, w: false, s: false, W: false, S: false };
+        window.addEventListener("keydown", (e) => { if (e.key in keys) keys[e.key] = true; });
+        window.addEventListener("keyup", (e) => { if (e.key in keys) keys[e.key] = false; });
+
+        // --- Controles Táctiles Mobile ---
+        const btnUp = document.getElementById("btnUp");
+        const btnDown = document.getElementById("btnDown");
+
+        btnUp.addEventListener("touchstart", (e) => { e.preventDefault(); keys.ArrowUp = true; });
+        btnUp.addEventListener("touchend", (e) => { e.preventDefault(); keys.ArrowUp = false; });
+        btnDown.addEventListener("touchstart", (e) => { e.preventDefault(); keys.ArrowDown = true; });
+        btnDown.addEventListener("touchend", (e) => { e.preventDefault(); keys.ArrowDown = false; });
+
+        // --- Arreglos de Objetos ---
+        let obstacles = []; // Diamantes y Triángulos peligrosos
+        let collectibles = []; // Cristales/Orbes de energía extra
+        let particles = []; // Partículas de efectos
+
+        // --- Generación de Obstáculos (Figuras de Diamante y Triángulos) ---
+        function spawnObstacle() {
+            const isTriangle = Math.random() > 0.5;
+            const size = Math.floor(Math.random() * 25) + 20; // Radio/tamaño
+            const y = Math.random() * (canvas.height - size * 2) + size;
+
+            obstacles.push({
+                x: canvas.width + size,
+                y: y,
+                size: size,
+                type: isTriangle ? 'triangle' : 'diamond',
+                color: "#ff2a6d",
+                rot: 0,
+                rotSpeed: (Math.random() - 0.5) * 0.1
+            });
+        }
+
+        // --- Generación de Coleccionables (Gemas/Escudos) ---
+        function spawnCollectible() {
+            const y = Math.random() * (canvas.height - 40) + 20;
+            const isShield = Math.random() < 0.2; // 20% probabilidad de Escudo
+            collectibles.push({
+                x: canvas.width + 20,
+                y: y,
+                radius: 12,
+                type: isShield ? 'shield' : 'score',
+                color: isShield ? '#00f3ff' : '#ffcc00'
+            });
+        }
+
+        // --- Efecto de Partículas ---
+        function createExplosion(x, y, color, count = 15) {
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 8,
+                    vy: (Math.random() - 0.5) * 8,
+                    radius: Math.random() * 4 + 1,
+                    color: color,
+                    alpha: 1,
+                    life: 0.03
+                });
+            }
+        }
+
+        // --- Reiniciar Juego ---
+        function resetGame() {
+            player.y = canvas.height / 2;
+            player.shield = false;
+            player.shieldTimer = 0;
+            player.trail = [];
+            obstacles = [];
+            collectibles = [];
+            particles = [];
+            score = 0;
+            gameSpeed = 5;
+            gameOver = false;
+            spawnTimer = 0;
+            itemTimer = 0;
+            loop();
+        }
+
+        window.addEventListener("click", (e) => { if (gameOver) resetGame(); });
+        window.addEventListener("keydown", (e) => { if (gameOver && e.key === " ") resetGame(); });
+
+        // --- Dibuja Jugador Circular ---
+        function drawPlayer() {
+            // Estela (Trail)
+            player.trail.push({ x: player.x, y: player.y });
+            if (player.trail.length > 10) player.trail.shift();
+
+            for (let i = 0; i < player.trail.length; i++) {
+                const pt = player.trail[i];
+                const ratio = i / player.trail.length;
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, player.radius * ratio, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(57, 255, 20, ${ratio * 0.4})`;
+                ctx.fill();
+            }
+
+            // Cuerpo del Jugador (Orbe Cyber)
+            ctx.shadowBlur = 18;
+            ctx.shadowColor = "#39ff14";
+
+            ctx.beginPath();
+            ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "#39ff14";
+            ctx.fill();
+
+            // Anillo Interno Giratorio
+            rotationAngle += 0.05;
+            ctx.save();
+            ctx.translate(player.x, player.y);
+            ctx.rotate(rotationAngle);
+            ctx.strokeStyle = "#080711";
+            ctx.lineWidth = 3;
+            ctx.strokeRect(-8, -8, 16, 16);
+            ctx.restore();
+
+            // Escudo Visión
+            if (player.shield) {
+                ctx.shadowColor = "#00f3ff";
+                ctx.strokeStyle = "#00f3ff";
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(player.x, player.y, player.radius + 8, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+            ctx.shadowBlur = 0;
+        }
+
+        // --- Dibujar Obstáculo (Diamantes y Triángulos) ---
+        function drawObstacle(obs) {
+            ctx.save();
+            ctx.translate(obs.x, obs.y);
+            ctx.rotate(obs.rot);
+
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = obs.color;
+            ctx.fillStyle = obs.color;
+
+            ctx.beginPath();
+            if (obs.type === 'diamond') {
+                // Rombo / Diamante
+                ctx.moveTo(0, -obs.size);
+                ctx.lineTo(obs.size * 0.8, 0);
+                ctx.lineTo(0, obs.size);
+                ctx.lineTo(-obs.size * 0.8, 0);
+            } else {
+                // Triángulo / Pico
+                ctx.moveTo(0, -obs.size);
+                ctx.lineTo(obs.size, obs.size);
+                ctx.lineTo(-obs.size, obs.size);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+            ctx.shadowBlur = 0;
+        }
+
+        // --- Bucle Principal del Juego ---
+        function loop() {
+            if (gameOver) {
+                ctx.fillStyle = "rgba(8, 7, 17, 0.85)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = "#ff2a6d";
+                ctx.fillStyle = "#ff2a6d";
+                ctx.font = "bold 42px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("¡SISTEMA COLAPSADO!", canvas.width / 2, canvas.height / 2 - 30);
+
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "20px monospace";
+                ctx.fillText(`Puntos: ${score}  |  Récord: ${highPuntuacion}`, canvas.width / 2, canvas.height / 2 + 20);
+
+                ctx.fillStyle = "#a4adcf";
+                ctx.font = "16px sans-serif";
+                ctx.fillText("Presiona ESPACIO o haz CLICK para reiniciar", canvas.width / 2, canvas.height / 2 + 75);
+                return;
+            }
+
+            requestAnimationFrame(loop);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Fondo: Línea Central Decorativa
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.03)";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height / 2);
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.stroke();
+
+            // Movimiento del Jugador
+            if (keys.ArrowUp || keys.w || keys.W) player.y -= player.speed;
+            if (keys.ArrowDown || keys.s || keys.S) player.y += player.speed;
+
+            // Límites de pantalla
+            if (player.y - player.radius < 0) player.y = player.radius;
+            if (player.y + player.radius > canvas.height) player.y = canvas.height - player.radius;
+
+            // Tiempo de Escudo
+            if (player.shield) {
+                player.shieldTimer--;
+                if (player.shieldTimer <= 0) player.shield = false;
+            }
+
+            // Dibujar Jugador
+            drawPlayer();
+
+            // Generar Obstáculos
+            spawnTimer++;
+            if (spawnTimer > Math.max(18, 55 - gameSpeed * 2.2)) {
+                spawnObstacle();
+                spawnTimer = 0;
+            }
+
+            // Generar Coleccionables
+            itemTimer++;
+            if (itemTimer > 150) {
+                if (Math.random() < 0.6) spawnCollectible();
+                itemTimer = 0;
+            }
+
+            // --- Partículas ---
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= p.life;
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.alpha;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+
+            // --- Gestionar Coleccionables ---
+            for (let i = collectibles.length - 1; i >= 0; i--) {
+                let item = collectibles[i];
+                item.x -= gameSpeed;
+
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = item.color;
+                ctx.fillStyle = item.color;
+                ctx.beginPath();
+                ctx.arc(item.x, item.y, item.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // Colisión Jugador - Coleccionable (Círculo a Círculo)
+                const dist = Math.hypot(player.x - item.x, player.y - item.y);
+                if (dist < player.radius + item.radius) {
+                    createExplosion(item.x, item.y, item.color, 10);
+                    if (item.type === 'shield') {
+                        player.shield = true;
+                        player.shieldTimer = 300; // ~5 segundos
+                    } else {
+                        score += 3;
+                    }
+                    collectibles.splice(i, 1);
+                    continue;
+                }
+
+                if (item.x < -20) collectibles.splice(i, 1);
+            }
+
+            // --- Gestionar Obstáculos ---
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                let obs = obstacles[i];
+                obs.x -= gameSpeed;
+                obs.rot += obs.rotSpeed;
+
+                drawObstacle(obs);
+
+                // Colisión Jugador - Obstáculo (Distancia Círculo - Punto Central)
+                const dist = Math.hypot(player.x - obs.x, player.y - obs.y);
+                if (dist < player.radius + obs.size * 0.7) {
+                    if (player.shield) {
+                        // El escudo absorbe el impacto
+                        player.shield = false;
+                        createExplosion(obs.x, obs.y, "#00f3ff", 20);
+                        obstacles.splice(i, 1);
+                        continue;
+                    } else {
+                        // Fin del juego
+                        createExplosion(player.x, player.y, "#ff2a6d", 30);
+                        gameOver = true;
+                        if (score > highPuntuacion) {
+                            highPuntuacion = score;
+                            localStorage.setItem("cyber_orb_high", highPuntuacion);
+                        }
+                    }
+                }
+
+                // Superar obstáculo (Ganas 1 Punto)
+                if (obs.x + obs.size < 0) {
+                    obstacles.splice(i, 1);
+                    score++;
+                    // Incrementar velocidad progresivamente
+                    if (score % 5 === 0) gameSpeed += 0.8;
+                }
+            }
+
+            // HUD / Marcador
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 16px monospace";
+            ctx.textAlign = "left";
+            ctx.fillText(`PUNTOS: ${score}`, 20, 30);
+            ctx.fillText(`VELOCIDAD: ${gameSpeed.toFixed(1)}`, 20, 55);
+            ctx.fillText(`RÉCORD: ${highPuntuacion}`, 20, 80);
+        }
+
+        // Iniciar bucle por primera vez
+        loop();
+    </script>
+</body>
+</html>
