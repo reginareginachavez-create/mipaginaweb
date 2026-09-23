@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario Avanzado con Datalist</title>
-  <h3><a href="index.html">← REGRESAR</a></h3>
+  
 </head>
 <body>
-
+    
   <header>
     <h1>Sistema de Registro de Tecnologías</h1>
     <p>Formulario estructurado con autocompletado dinámico mediante <code>&lt;datalist&gt;</code>.</p>
@@ -16,7 +16,7 @@
   <main>
     <form action="/procesar-datos" method="POST">
       
-      <!-- Agrupación semántica del formulario -->
+      
       <fieldset>
         <legend>Información de Preferencias Tecnográficas</legend>
 
@@ -37,12 +37,8 @@
           <small id="ayuda-so">Puedes seleccionar una opción sugerida o escribir una opción personalizada.</small>
         </p>
 
-        <!-- DATALIST CON FALLBACK / SOPORTE COMPATIBLE -->
         <datalist id="lista-so">
-          <!-- 
-            El elemento <select> interno actúa como fallback: 
-            Si el navegador NO soporta <datalist>, renderizará un <select> automáticamente.
-          -->
+          
           <select name="so_fallback">
             <option value="Windows 11">Windows 11 (Microsoft)</option>
             <option value="macOS Sequoia">macOS Sequoia (Apple)</option>
@@ -64,7 +60,7 @@
 
       <br>
 
-      <!-- Botones de control -->
+      
       <button type="submit">Enviar Formulario</button>
       <button type="reset">Limpiar Campos</button>
 

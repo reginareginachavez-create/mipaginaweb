@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formularios HTML - Interactivos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table, th, td {
+      border: 1px solid #777;
+      border-collapse: collapse;
+      padding: 10px;
+    }
+    table {
+      width: 100%;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    fieldset {
+      border: 1px solid #1a73e8;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 4px;
+    }
+    legend {
+      font-weight: bold;
+      color: #1a73e8;
+      padding: 0 5px;
+    }
+    .demo-container {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+  </style>
+</head>
+<body>
+    <h3><a href="index.html">← Volver al Inicio (Index)</a></h3>
+
+  <h2>Lista de Elementos de Formulario HTML (Funcionales y Desordenados)</h2>
+
+  
+  <form id="miFormulario" oninput="resultadoOutput.value = parseInt(numA.value || 0) + parseInt(numB.value || 0)">
+
+    <table>
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th>Etiqueta / Tipo</th>
+          <th>Visualización / Control Interactivo</th>
+          <th>Descripción</th>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        
+        <tr>
+          <td>1</td>
+          <td>color</td>
+          <td>
+            <input type="color" id="miColor" name="color" value="#ff0000">
+          </td>
+          <td>Seleccionar color</td>
+          <td>BRYAN</td>
+        </tr>
+
+        
+        <tr>
+          <td>2</td>
+          <td>checkbox</td>
+          <td>
+            <label><input type="checkbox" name="opcion1" checked> Opción A</label>
+            <label><input type="checkbox" name="opcion2" checked> Opción B</label>
+          </td>
+          <td>Casilla de verificación</td>
+          <td>ALEXIS</td>
+        </tr>
+
+        
+        <tr>
+          <td>3</td>
+          <td>submit</td>
+          <td>
+            <input type="submit" value="Enviar Formulario">
+          </td>
+          <td>Botón enviar</td>
+          <td>CARLOS</td>
+        </tr>
+
+        
+        <tr>
+          <td>4</td>
+          <td>password</td>
+          <td>
+            Contraseña: <input type="password" name="pass" value="12345678" placeholder="Escribe tu clave">
+          </td>
+          <td>Campo tipo contraseña</td>
+          <td>HECTOR</td>
+        </tr>
+
+        
+        <tr>
+          <td>5</td>
+          <td>optgroup</td>
+          <td>
+            Carrera:
+            <select name="carrera">
+              <optgroup label="Contabilidad">
+                <option value="auxiliar">Auxiliar Contable</option>
+                <option value="finanzas">Finanzas</option>
+              </optgroup>
+              <optgroup label="Tecnología">
+                <option value="sistemas">Sistemas</option>
+                <option value="programacion">Programación</option>
+              </optgroup>
+            </select>
+          </td>
+          <td>Etiqueta que sirve para agrupar opciones dentro de una lista desplegable</td>
+          <td>Esteban</td>
+        </tr>
+
+        
+        <tr>
+          <td>6</td>
+          <td>text</td>
+          <td>
+            <input type="text" name="textoLibre" placeholder="Escribe texto aquí...">
+          </td>
+          <td>Campo de texto</td>
+          <td>JULIETA</td>
+        </tr>
+
+        
+        <tr>
+          <td>7</td>
+          <td>date</td>
+          <td>
+            <input type="date" name="fechaNacimiento">
+          </td>
+          <td>Input para seleccionar fecha</td>
+          <td>ARYANA</td>
+        </tr>
+
+        
+        <tr>
+          <td>8</td>
+          <td>boton</td>
+          <td>
+            <button type="button" onclick="alert('¡Boton 1 presionado!')">Ejemplo Boton</button>
+            <button type="button" onclick="alert('¡Boton 2 presionado!')">Ejemplo 2</button>
+          </td>
+          <td>Campo boton comando</td>
+          <td>NEFERTITI</td>
+        </tr>
+
+        
+        <tr>
+          <td>9</td>
+          <td>label o Etiqueta</td>
+          <td>
+            <label for="campoEjemplo">Nombre:</label>
+            <input type="text" id="campoEjemplo" name="nombreEtiquetado" placeholder="Haz clic en la palabra 'Nombre:'">
+          </td>
+          <td>Sirve para colocar texto estático dentro de un formulario como Descripción y también muestra resultados</td>
+          <td>JESUS</td>
+        </tr>
+
+        
+        <tr>
+          <td>10</td>
+          <td>textarea</td>
+          <td>
+            <textarea name="comentario" rows="3" cols="30" placeholder="Escribe tus comentarios..."></textarea>
+          </td>
+          <td>Área de texto</td>
+          <td>NATALIA</td>
+        </tr>
+
+        
+        <tr>
+          <td>11</td>
+          <td>meter</td>
+          <td>
+            <meter id="demoMeter" min="0" max="100" low="33" high="66" optimum="80" value="75"></meter>
+            <small>(Valor: 75/100)</small>
+          </td>
+          <td>Muestra gráficamente un valor predeterminado</td>
+          <td>ANGEL</td>
+        </tr>
+
+       
+        <tr>
+          <td>12</td>
+          <td>email</td>
+          <td>
+            <input type="email" name="correo" placeholder="usuario@dominio.com">
+          </td>
+          <td>Campo de correo electrónico</td>
+          <td>SEBASTIAN</td>
+        </tr>
+
+        
+        <tr>
+          <td>13</td>
+          <td>range</td>
+          <td>
+            <input type="range" id="miRange" min="0" max="100" value="50" oninput="valRange.value = this.value">
+            <span id="valRange">50</span>
+          </td>
+          <td>Sirve para seleccionar un valor deslizante</td>
+          <td>ABRAHAM</td>
+        </tr>
+
+        
+        <tr>
+          <td>14</td>
+          <td>progress</td>
+          <td>
+            <progress id="miProgreso" value="45" max="100"></progress>
+            <small>(45%)</small>
+          </td>
+          <td>Barra de progreso</td>
+          <td>DILAN</td>
+        </tr>
+
+       
+        <tr>
+          <td>15</td>
+          <td>file</td>
+          <td>
+            Archivo: <input type="file" name="archivoSubida">
+          </td>
+          <td>Sirve para cargar archivos</td>
+          <td>MICH</td>
+        </tr>
+        
+        <tr>
+          <td>16</td>
+          <td>url</td>
+          <td>
+            <input type="url" name="sitioWeb" value="https://www.google.com" placeholder="https://ejemplo.com">
+          </td>
+          <td>SE ASIGNA dirección URL o link</td>
+          <td>SANTIAGO</td>
+        </tr>
+
+        
+        <tr>
+          <td>17</td>
+          <td>fieldset</td>
+          <td>
+            <fieldset>
+              <legend>DATOS PERSONALES</legend>
+              <label>Nombre: <input type="text" name="fsNombre"></label><br><br>
+              <label>Apellido: <input type="text" name="fsApellido"></label>
+            </fieldset>
+          </td>
+          <td>Agrupar elementos del formulario</td>
+          <td>GABRIEL</td>
+        </tr>
+
+        
+        <tr>
+          <td>18</td>
+          <td>boton reset</td>
+          <td>
+            <input type="reset" value="Borrar Formulario">
+          </td>
+          <td>Botón para borrar el formulario</td>
+          <td>XIMENA</td>
+        </tr>
+
+       
+        <tr>
+          <td>19</td>
+          <td>output</td>
+          <td>
+            <div class="demo-container">
+              
+              <input type="number" id="numA" value="10" style="width: 50px;"> + 
+              <input type="number" id="numB" value="5" style="width: 50px;"> = 
+              <strong><output name="resultadoOutput" for="numA numB">15</output></strong>
+            </div>
+          </td>
+          <td>Salida de información (cálculo en tiempo real)</td>
+          <td>ABRIL</td>
+        </tr>
+
+        
+          <td>20</td>
+          <td>datalist</td>
+          <td>
+            <input list="listaLenguajes" name="lenguajePref" placeholder="Escribe tu idioma :D'...">
+            <datalist id="listaLenguajes">
+              <option value="Español">
+              <option value="Ingles">
+              <option value="Frances">
+              <option value="Aleman">
+              <option value="Italiano">
+              <option value="Chino">
+            </datalist>
+          </td>
+          <td>Muestra opciones sugeridas al escribir en el campo (autocompletado)</td>
+          <td>REGINA</td>
+        </tr>
+
+        
+        <tr>
+          <td>21</td>
+          <td>radio button</td>
+          <td>
+            <label><input type="radio" name="genero" value="m"> Masculino</label>
+            <label><input type="radio" name="genero" value="f"> Femenino</label>
+          </td>
+          <td>Botón de selección radio</td>
+          <td>IAN</td>
+        </tr>
+
+        
+        <tr>
+          <td>22</td>
+          <td>month</td>
+          <td>
+            <input type="month" name="mesAno" value="2026-01">
+          </td>
+          <td>Campo para seleccionar mes</td>
+          <td>EMILIO</td>
+        </tr>
+
+       
+        <tr>
+          <td>23</td>
+          <td>legend</td>
+          <td>
+            <fieldset>
+              <legend>TÍTULO DEL GRUPO (Etiqueta Legend)</legend>
+              <p style="margin:5px 0;">La etiqueta &lt;legend&gt; define el título de este recuadro agrupador.</p>
+            </fieldset>
+          </td>
+          <td>Muestra el título de una sección</td>
+          <td>ZOE</td>
+        </tr>
+
+        
+        <tr>
+          <td>24</td>
+          <td>number</td>
+          <td>
+            <input type="number" name="edad" min="1" max="100" placeholder="Ej. 25">
+          </td>
+          <td>Escribir número de entrada</td>
+          <td>ZURIEL</td>
+        </tr>
+
+        
+        <tr>
+          <td>25</td>
+          <td>formulario</td>
+          <td>
+            <small style="color: green;">✔ Toda esta tabla está contenida dentro de la etiqueta &lt;form&gt; funcional.</small>
+          </td>
+          <td>Sirve para agrupar un formulario</td>
+          <td>CHARBEL</td>
+        </tr>
+
+        
+        <tr>
+          <td>26</td>
+          <td>time</td>
+          <td>
+            <input type="time" name="horaPrueba" value="09:05">
+          </td>
+          <td>Campo para seleccionar hora</td>
+          <td>ALEXIS</td>
+        </tr>
+
+        
+        <tr>
+          <td>27</td>
+          <td>select combo</td>
+          <td>
+            <select name="comboSimple">
+              <option value="1">Opción Uno</option>
+              <option value="2">Opción Dos</option>
+              <option value="3">Opción Tres</option>
+            </select>
+          </td>
+          <td>Lista desplegable o combo box</td>
+          <td>MAYTE</td>
+        </tr>
+
+        
+        <tr>
+          <td>28</td>
+          <td>tel</td>
+          <td>
+            <input type="tel" name="telefono" value="5254243" pattern="[0-9]{7,10}">
+          </td>
+          <td>Campo teléfono</td>
+          <td>ALEXANDER</td>
+        </tr>
+
+        
+        <tr>
+          <td>29</td>
+          <td>hidden</td>
+          <td>
+            <input type="hidden" name="usuarioID" value="USR-99823">
+            <span style="color: #666; font-size: 12px;">(Campo invisible presente en el código HTML)</span>
+          </td>
+          <td>Campo oculto</td>
+          <td>JESUS</td>
+        </tr>
+
+        
+        <tr>
+          <td>30</td>
+          <td>week</td>
+          <td>
+            <input type="week" name="semanaAno">
+          </td>
+          <td>Campo semana del año</td>
+          <td>DIEGO</td>
+        </tr>
+
+        
+
+      </tbody>
+    </table>
+
+  </form>
+  
+
+</body>
+</html>
